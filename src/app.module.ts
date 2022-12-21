@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { Album } from './schemas/album.schema';
+import { AlbumsTracks } from './schemas/albums-tracks.schema';
+import { Comment } from './schemas/comment.schema';
 import { Track } from './schemas/track.schema';
 import { TrackModule } from './track/track.module';
 
@@ -13,7 +16,7 @@ import { TrackModule } from './track/track.module';
       username: 'postgres',
       password: 'root',
       database: 'musicPlatform',
-      models: [Track],
+      models: [Track, Comment, Album, AlbumsTracks],
       autoLoadModels: true,
     }),
   ],

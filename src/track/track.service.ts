@@ -1,35 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import * as UUID from 'uuid';
 
 import { Track } from 'src/schemas/track.schema';
+import { TrackDto } from './dto/track.dto';
+
+interface ICreateTrack {
+  uuid: string;
+  name: string;
+  artist: string;
+  listens: string;
+  picture: string;
+  audio: string;
+}
 
 @Injectable()
 export class TrackService {
   constructor(
     @InjectModel(Track)
-    private trackModel: typeof Track,
+    private trackRepository: typeof Track,
   ) {}
-  async create() {
+  async create(trackDto: TrackDto) {
+    const uuid = UUID.v4();
 
-  }
+    const params: ICreateTrack = {
+      uuid,
+      ...trackDto,
+    };
 
-  async getTrack() {
-
-  }
-
-  async getAllTracks() {
-    const track = await this.trackModel.create({
-      uuid: '222',
-      name: '123'
+    const track = await this.trackRepository.create({
+      ...params,
     });
 
-    console.log(track);
-    
-
     return track;
-  }
-
-  async deleteTrack() {
-
   }
 }
