@@ -11,8 +11,19 @@ import { Album } from './album.schema';
 import { AlbumsTracks } from './albums-tracks.schema';
 import { Comment } from './comment.schema';
 
+export interface ITrackRepository {
+  uuid: string;
+  albums?: Array<Album>;
+  name: string;
+  artist: string;
+  listens: number;
+  picture: string;
+  audio: string;
+  comments?: Array<Comment>;
+}
+
 @Table({ tableName: 'trackTable', createdAt: false, updatedAt: false })
-export class Track extends Model {
+export class Track extends Model<Track, ITrackRepository> {
   @Column({ type: DataType.STRING, primaryKey: true, unique: true })
   uuid: string;
 
@@ -25,8 +36,8 @@ export class Track extends Model {
   @Column({ type: DataType.STRING })
   artist: string;
 
-  @Column({ type: DataType.STRING })
-  listens: string;
+  @Column({ type: DataType.NUMBER })
+  listens: number;
 
   @Column({ type: DataType.STRING })
   picture: string;

@@ -9,8 +9,16 @@ import {
 
 import { Track } from './track.schema';
 
+export interface ICommentRepository {
+  uuid: string;
+  track_uuid: string;
+  username: string;
+  text: string;
+  track?: Track;
+}
+
 @Table({ tableName: 'commentTable' })
-export class Comment extends Model {
+export class Comment extends Model<Comment, ICommentRepository> {
   @Column({ type: DataType.STRING, primaryKey: true, unique: true })
   uuid: string;
 
