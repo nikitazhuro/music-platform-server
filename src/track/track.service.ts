@@ -4,7 +4,7 @@ import * as UUID from 'uuid';
 
 import { ITrackRepository, Track } from 'src/schemas/track.schema';
 import { TrackDto } from './dto/track.dto';
-import { FileService } from 'src/files/file.service';
+import { Files, FileService } from 'src/files/file.service';
 
 @Injectable()
 export class TrackService {
@@ -14,14 +14,15 @@ export class TrackService {
     private readonly fileService: FileService,
   ) {}
 
-  async create(trackDto: TrackDto, image): Promise<Track> {
-    const filePath = await this.fileService.create(image);
+  async create(trackDto: TrackDto, image, audio): Promise<Track> {
+    const imagePath = await this.fileService.create(Files.IMAGE, image);
+    const audioPath = await this.fileService.create(Files.AUDIO, audio);
 
     const params: ITrackRepository = {
       uuid: UUID.v4(),
       ...trackDto,
-      picture: filePath,
-      audio: '',
+      image: imagePath,
+      audio: audioPath,
       listens: 0,
     };
 

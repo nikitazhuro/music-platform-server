@@ -27,7 +27,7 @@ import { TrackModule } from './track/track.module';
       autoLoadModels: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'static'),
+      rootPath: path.resolve(__dirname, 'static'),
     }),
   ],
   controllers: [],

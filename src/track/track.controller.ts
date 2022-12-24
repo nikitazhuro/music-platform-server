@@ -19,25 +19,20 @@ export class TrackController {
   @Post('create')
   @UseInterceptors(
     FileFieldsInterceptor([
-      { name: 'picture', maxCount: 1 },
+      { name: 'audio', maxCount: 1 },
       { name: 'image', maxCount: 1 },
     ]),
   )
   create(
     @Body() trackDto: TrackDto,
     @UploadedFiles()
-    files: { picture?: Express.Multer.File[]; image?: Express.Multer.File[] },
+    files: { audio?: Express.Multer.File[]; image?: Express.Multer.File[] },
   ) {
-    console.log(files);
-
-    const track = this.trackService.create(trackDto, files.image[0]);
-    return track;
+    return this.trackService.create(trackDto, files.image[0], files.audio[0]);
   }
 
   @Get()
   getAll() {
-    const tracks = this.trackService.getAll();
-
-    return tracks;
+    return this.trackService.getAll();
   }
 }
