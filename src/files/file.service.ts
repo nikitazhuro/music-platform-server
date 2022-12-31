@@ -27,4 +27,20 @@ export class FileService {
       throw new HttpException('File error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async delete(fileType: Files, fileName: string) {
+    try {
+      const filePath = path.resolve(__dirname, '..', 'static', fileType);
+      if (!fs.existsSync(filePath)) {
+        return;
+      }
+
+      const fileUUIDAndExtension = fileName.split('/')[1];
+
+      fs.rmSync(path.join(filePath, fileUUIDAndExtension));
+      return;
+    } catch (error) {
+      throw new HttpException('File error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

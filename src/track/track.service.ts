@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import * as UUID from 'uuid';
 
 import { ITrackRepository, Track } from 'src/schemas/track.schema';
-import { TrackDto } from './dto/track.dto';
+import { TrackCreateDto } from './dto/track-create.dto';
 import { Files, FileService } from 'src/files/file.service';
+import { TrackDeleteDto } from './dto/track-delete.dto';
 
 @Injectable()
 export class TrackService {
@@ -14,7 +15,7 @@ export class TrackService {
     private readonly fileService: FileService,
   ) {}
 
-  async create(trackDto: TrackDto, image, audio): Promise<Track> {
+  async create(trackDto: TrackCreateDto, image, audio): Promise<Track> {
     const imagePath = await this.fileService.create(Files.IMAGE, image);
     const audioPath = await this.fileService.create(Files.AUDIO, audio);
 
@@ -31,6 +32,21 @@ export class TrackService {
     });
 
     return track;
+  }
+
+  async delete(trackDeleteDto: TrackDeleteDto) {
+    const { trackUUID, audio, image } = trackDeleteDto;
+
+    await this.trackRepository.destroy({
+      where: {
+        uuid: trackUUID,
+      },
+    });
+
+    await this.fileService.delete(Files.IMAGE, image);
+    await this.fileService.delete(Files.AUDIO, audio);
+
+    return HttpStatus.ACCEPTED;
   }
 
   async findATrack(uuid: string): Promise<Track> {
