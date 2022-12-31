@@ -6,6 +6,7 @@ import {
   UseInterceptors,
   UploadedFiles,
   Delete,
+  Param,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express/multer';
 import { Express } from 'express';
@@ -45,5 +46,10 @@ export class TrackController {
   @Get()
   getAll() {
     return this.trackService.getAll();
+  }
+
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.trackService.findATrack(id);
   }
 }
