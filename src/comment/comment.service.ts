@@ -42,10 +42,10 @@ export class CommentService {
     return this.commentRepository.findAll();
   }
 
-  async delete() {
+  async delete(uuid: string) {
     return this.commentRepository.destroy({
       where: {
-        uuid: '',
+        uuid,
       },
     });
   }

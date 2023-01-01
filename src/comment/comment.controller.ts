@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { DeleteCommentDto } from './dto/delete-comment.dto';
 
 @Controller('comment')
 export class CommentController {
@@ -20,9 +21,9 @@ export class CommentController {
     return allComments;
   }
 
-  @Get('delete')
-  delete() {
-    const comment = this.commentService.delete();
+  @Delete('/:uuid')
+  delete(@Param() query: DeleteCommentDto) {
+    const comment = this.commentService.delete(query.uuid);
 
     return comment;
   }
