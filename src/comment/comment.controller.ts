@@ -1,30 +1,35 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
+
 import { CommentService } from './comment.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { DeleteCommentDto } from './dto/delete-comment.dto';
+
+import { CommentCreateDto } from './dto/comment-create.dto';
+import { CommentDeleteDto } from './dto/comment-delete.dto';
+import { CommentGetAllQuery } from './query/comment-getAll.query';
 
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post('create')
-  create(@Body() createCommentDto: CreateCommentDto) {
-    const comment = this.commentService.create(createCommentDto);
-
-    return comment;
+  create(@Body() createCommentDto: CommentCreateDto) {
+    return this.commentService.create(createCommentDto);
   }
 
   @Get()
-  getAll() {
-    const allComments = this.commentService.getAll();
-
-    return allComments;
+  getAll(@Query() query: CommentGetAllQuery) {
+    return this.commentService.getAll(query);
   }
 
   @Delete('/:uuid')
-  delete(@Param() query: DeleteCommentDto) {
-    const comment = this.commentService.delete(query.uuid);
-
-    return comment;
+  delete(@Param() query: CommentDeleteDto) {
+    this.commentService.delete(query.uuid);
   }
 }
