@@ -16,6 +16,7 @@ export interface ITrackRepository {
   albums?: Array<Album>;
   name: string;
   artist: string;
+  duration: string;
   listens: number;
   image: string;
   audio: string;
@@ -35,6 +36,9 @@ export class Track extends Model<Track, ITrackRepository> {
 
   @Column({ type: DataType.STRING })
   artist: string;
+
+  @Column({ type: DataType.STRING })
+  duration: string;
 
   @Column({ type: DataType.INTEGER })
   listens: number;
