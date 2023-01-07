@@ -14,7 +14,7 @@ export interface IAlbumRepository {
   uuid: string;
   name: string;
   picture: string;
-  text: string;
+  description: string;
   tracks: Array<Track>;
 }
 
@@ -27,10 +27,10 @@ export class Album extends Model<Album, IAlbumRepository> {
   name: string;
 
   @Column({ type: DataType.STRING })
-  picture: string;
+  description: string;
 
   @Column({ type: DataType.STRING })
-  text: string;
+  picture: string;
 
   @BelongsToMany(() => Track, () => AlbumsTracks)
   tracks: Array<Track>;
