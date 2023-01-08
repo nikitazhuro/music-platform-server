@@ -13,9 +13,9 @@ import { Track } from './track.schema';
 export interface IAlbumRepository {
   uuid: string;
   name: string;
-  picture: string;
+  image: string;
   description: string;
-  tracks: Array<Track>;
+  tracks?: Array<Track>;
 }
 
 @Table({ tableName: 'albumTable' })
@@ -30,7 +30,7 @@ export class Album extends Model<Album, IAlbumRepository> {
   description: string;
 
   @Column({ type: DataType.STRING })
-  picture: string;
+  image: string;
 
   @BelongsToMany(() => Track, () => AlbumsTracks)
   tracks: Array<Track>;
