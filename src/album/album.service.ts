@@ -2,18 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { v4 } from 'uuid';
 
+import { Files, FileService } from 'src/files/file.service';
+
 import { AlbumCreateDto } from './dto/album-create.dto';
 import { Album, IAlbumRepository } from 'src/schemas/album.schema';
-import { Files, FileService } from 'src/files/file.service';
 import { AlbumUpdateTracksDto } from './dto/album-updateTracks.dto';
-import { Track } from 'src/schemas/track.schema';
-import { TrackService } from 'src/track/track.service';
 
 @Injectable()
 export class AlbumService {
   constructor(
     @InjectModel(Album) private albumRepository: typeof Album,
-    private readonly trackService: TrackService,
     private readonly fileService: FileService,
   ) {}
 
@@ -42,8 +40,6 @@ export class AlbumService {
     });
 
     await album.$set('tracks', trackList as string[]);
-
-    return album;
   }
 
   async getAlbums() {

@@ -25,13 +25,12 @@ export class AlbumController {
     @Body() albumCreateDto: AlbumCreateDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const album = this.albumService.create(albumCreateDto, file);
-    return album;
+    return this.albumService.create(albumCreateDto, file);
   }
 
   @Put()
   updateTrackList(@Body() albumUpdateTracksDto: AlbumUpdateTracksDto) {
-    return this.albumService.updateTrackList(albumUpdateTracksDto);
+    this.albumService.updateTrackList(albumUpdateTracksDto);
   }
 
   @Get()
