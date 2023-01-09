@@ -60,6 +60,10 @@ export class TrackService {
   }
 
   async getAll(): Promise<Array<Track>> {
-    return this.trackRepository.findAll();
+    return this.trackRepository.findAll({
+      include: {
+        all: true,
+      },
+    });
   }
 }
