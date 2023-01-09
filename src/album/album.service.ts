@@ -39,7 +39,15 @@ export class AlbumService {
       },
     });
 
-    await album.$set('tracks', trackList as string[]);
+    if (trackList?.length) {
+      await album.$set('tracks', trackList as string[]);
+    } else {
+      await album.$set('tracks', []);
+    }
+
+    album.tracks = [];
+
+    return album;
   }
 
   async getAlbums() {

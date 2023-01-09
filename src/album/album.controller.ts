@@ -6,7 +6,7 @@ import {
   Param,
   UploadedFile,
   UseInterceptors,
-  Put,
+  Patch,
 } from '@nestjs/common';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -28,9 +28,9 @@ export class AlbumController {
     return this.albumService.create(albumCreateDto, file);
   }
 
-  @Put()
+  @Patch(':uuid')
   updateTrackList(@Body() albumUpdateTracksDto: AlbumUpdateTracksDto) {
-    this.albumService.updateTrackList(albumUpdateTracksDto);
+    return this.albumService.updateTrackList(albumUpdateTracksDto);
   }
 
   @Get()
